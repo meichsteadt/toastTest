@@ -1,0 +1,14 @@
+<div class="border">
+  <h3><%= forecast.date %></h3>
+  <hr>
+  <canvas id="<%= forecast.id %>" width="128" height="128"></canvas>
+  <p><%= forecast.summary %></p>
+  <p><%= forecast.temperatureHigh %>&#176; <span class="temp-low"><%= forecast.temperatureLow %></span>&#176;</p>
+  <p>Chance of Rain: <%= forecast.precipProbability %></p>
+  <p>Wind Speed: <%= forecast.windSpeed %></p>
+  <p>Humidity: <%= forecast.humidity %></p>
+</div>
+<script>
+  skycons.add('<%= forecast.id %>', Skycons.<%= forecast.icon %>)
+  hideLoader();
+</script>

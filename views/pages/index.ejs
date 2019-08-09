@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast This Week</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/skycons.js" charset="utf-8"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      var skycons = new Skycons();
+
+      const hideError = () => {
+        $("#current-location-error").hide();
+      }
+
+      const hideLoader = () => {
+        $('.forecasts').show();
+        $('.loader').hide();
+      }
+
+      const showLoader = () => {
+        $('.forecasts').hide();
+        $('.loader').show();
+      }
+
+
+      const getCurrentWeather = () => {
+        hideError();
+        if (window.navigator.geolocation) {
+          window.navigator.geolocation.getCurrentPosition((res) => {
+            let lat = res.coords.latitude;
+            let lng = res.coords.longitude;
+            let location = {lat: lat, lng: lng}
+            $("#lat").val(lat)
+            $("#lng").val(lng)
+            $("#forecast").submit();
+          }, function(error){
+            $("#current-location-error").show();
+          })
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather Forecast This Week</h1>
+
+      <%- include("../partials/form", {error: error} )%>
+
+      <div class="loader"></div>
+
+        <div class="forecasts row">
+          <% if(zip) { %>
+            <div class="col-sm-12">
+                <h2>Showing weather for <%= zip %></h2>
+            </div>
+          <% } %>
+          <% forecasts.forEach((forecast) => { %>
+            <div class="forecast col-lg-3 col-md-4 col-sm-6 text-center">
+              <%- include('../partials/forecast', {forecast: forecast}) %>
+            </div>
+          <% }); %>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+      $(function() {
+        skycons.play();
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-lrg-4 col-md-6 col-sm-12">
+    <form id="forecast" action="forecast" method="post">
+      <!-- Hidden lat and lng input for client side location -->
+      <input class="hidden" style="display: none;" type="text" name="lat" id="lat">
+      <input class="hidden" style="display: none;" type="text" name="lng" id="lng">
+
+      <div class="form-group">
+        <label for="zipCode">Zip Code</label>
+        <input class="form-control" type="text" name="zipCode" id="zipCode" required placeholder="Enter a 5 digit zip code">
+      </div>
+      <button onclick='{hideError(); showLoader();}' type="submit" class="btn btn-primary">Submit</button>
+      <button onclick="{getCurrentWeather(); showLoader();}" type="button" class="btn btn-secondary">Current Location Weather</button>
+    </form>
+    <% if(error) { %>
+      <div class="form invalid-feedback">Something went wrong. Make sure the location is a US zip code.</div>
+      <% } %>
+  </div>
+  <div id="current-location-error" class="invalid-feedback">It looks like we weren't able to access your location. Try looking up by zip code instead.</div>
+</div>
