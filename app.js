@@ -7,7 +7,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
-const port = 3000;
+const port = process.env.PORT;
 
 // access api key, ignored in git by default so you'll need to add your own to run locally
 const apiKey = process.env.apiKey;
@@ -110,4 +110,6 @@ app.post('/forecast', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+if(port) {
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+}
